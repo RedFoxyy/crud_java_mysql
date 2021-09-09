@@ -1,31 +1,39 @@
-
 package br.com.loja.telas;
-
-import br.com.loja.dal.conecta;
+import br.com.loja.dal.Conecta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
-
-    
     Connection conexao;
-    PreparedStatement presta;
-    ResultSet resultado;
-    
-    
+    PreparedStatement pst;
+    ResultSet rs;
     public void logar(){
-        String sql = "Select * from usuarios where email=? and senha=?";
+        String sql = "Select * from usuarios where login=? and senha=?";
         try {
-            presta = conexao.prepareStatement(sql);
-            presta.setString(1, UserField.getText());
-            presta.setString(2, PassField.getText());
-            resultado = presta.executeQuery();
-            if (resultado.next()){
-                //abluablaublaue
-                JOptionPane.showMessageDialog(null, "lalalala");
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, LoginField.getText());
+            String senha = new String(PassField.getPassword());
+            pst.setString(2, senha);
+            rs = pst.executeQuery();
+            if (rs.next()){
+                String perfil = rs.getString(6);
+                if(perfil.equals("admin")){
+                    Home tela = new Home();
+                    tela.setVisible(true);
+                    tela.usuarios.setEnabled(true);
+                    tela.relas.setEnabled(true);
+                    tela.user.setText(rs.getString(2));
+                    this.dispose();
+                    conexao.close(); 
+                } else {
+                    Home tela = new Home();
+                    tela.setVisible(true);
+                    this.dispose();
+                    conexao.close(); 
+                }
             } else{
-                JOptionPane.showMessageDialog(null, "alguma coisa ae :/");
+                JOptionPane.showMessageDialog(null, "Algo está errado! Reveja suas informações.");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -34,8 +42,14 @@ public class Login extends javax.swing.JFrame {
     
     public Login() {
         initComponents();
-        conexao = conecta.conector();
-        
+        conexao = Conecta.conector();
+        if (conexao != null) {
+            status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/loja/icones/dbok.png")));
+            statusText.setText("Conectado!");
+        } else {
+            status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/loja/icones/dberror.png")));
+            statusText.setText("Desconectado!");
+        }
     }
 
     /**
@@ -49,21 +63,24 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        UserField = new javax.swing.JTextField();
+        LoginField = new javax.swing.JTextField();
         PassField = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        status = new javax.swing.JLabel();
+        statusText = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
         setResizable(false);
 
-        jLabel1.setText("Email");
+        jLabel1.setText("Login");
 
         jLabel2.setText("Senha");
 
-        UserField.addActionListener(new java.awt.event.ActionListener() {
+        LoginField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserFieldActionPerformed(evt);
+                LoginFieldActionPerformed(evt);
             }
         });
 
@@ -74,6 +91,11 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/loja/icones/dberror.png"))); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("LOGIN");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,42 +103,54 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
+                        .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(UserField, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                            .addComponent(PassField)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(LoginField)
+                                .addComponent(PassField, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(status)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(statusText, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jButton1)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                        .addGap(165, 165, 165)
+                        .addComponent(jLabel3)))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(UserField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(LoginField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(PassField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64)
-                .addComponent(jButton1)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(statusText, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(status))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void UserFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserFieldActionPerformed
+    private void LoginFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_UserFieldActionPerformed
+    }//GEN-LAST:event_LoginFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         logar();
@@ -158,10 +192,13 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField LoginField;
     private javax.swing.JPasswordField PassField;
-    private javax.swing.JTextField UserField;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel status;
+    private javax.swing.JLabel statusText;
     // End of variables declaration//GEN-END:variables
 }
