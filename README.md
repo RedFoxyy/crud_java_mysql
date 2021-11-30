@@ -10,24 +10,24 @@ ATUALIZAÇÃO DA TABELA OREDEM_SERVIÇO
 
 <h1> Telas criadas no CRUD </h1>
 <h2>==> Tela Login</h2>
-![image](https://user-images.githubusercontent.com/53703505/144060780-ee4b4f0e-716a-43ae-9924-e16863812746.png)
+![image](https://user-images.githubusercontent.com/62770277/144097476-831b2ef7-196e-4199-8990-56d2ab71a43a.png)
 
 <h2>==> Tela Principal</h2>
-![image](https://user-images.githubusercontent.com/53703505/144060873-63189770-f35e-42c1-9aed-97772ce295be.png)
+![image](https://user-images.githubusercontent.com/62770277/144097473-040b2e13-4fa8-4131-8166-fd08d0f4132e.png)
 
 <h2>==> Tela Usuários</h2>
-![image](https://user-images.githubusercontent.com/53703505/144061109-5ff64ae2-43d8-48c8-a9ff-f301242a0d42.png)
+![image](https://user-images.githubusercontent.com/62770277/144097492-f78a5198-97c1-4121-abd5-c3a2a5bff8ff.png)
 
 <h2>==> Tela Clientes</h2> 
-![image](https://user-images.githubusercontent.com/53703505/144061211-b2657af8-734e-4dbe-9d40-94687787b2a6.png)
+![image](https://user-images.githubusercontent.com/62770277/144097490-2cb5178c-c47a-4502-beed-1af974ebbbd5.png)
 
 <h2>==> Tela OS</h2> 
-![image](https://user-images.githubusercontent.com/53703505/144061285-3ea9df10-60a5-42ed-8406-80b46fc00c4e.png)
+![image](https://user-images.githubusercontent.com/62770277/144097488-a84233f0-a5c2-4786-ab32-5c100c4d40a4.png)
 
 Todas as telas do Sistema possuem as funcionalidades de um CRUD (Create, Readme, Update e Delete). A partir da tela OS, foram incluídas algumas funcionalidades como por exemplo a desabilitação/habilitação de alguns botões e pesquisa avançada por registros a partir de um caracter digitado.
 
 <h1>Bibliotecas que foram utilizadas neste projeto:</h1>
-![image](https://user-images.githubusercontent.com/53703505/144062187-0d21cf68-b4ae-4eea-9930-b4770afa04d9.png)
+![image](https://user-images.githubusercontent.com/62770277/144097484-558419e8-eab8-4719-909b-2aa3e4ef3772.png)
 
 <h1>Estrutura de Pastas no Projeto:</h1>
-![image](https://user-images.githubusercontent.com/53703505/144062524-3d4c67bd-3dcb-4d47-9c23-12f46515b037.png)
+![image](https://user-images.githubusercontent.com/62770277/144097482-173d780f-f78e-40fb-84a0-64a4e87e619c.png)
